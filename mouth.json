@@ -1,0 +1,62 @@
+[
+    {
+        "id": "mouth1_1",
+        "src": "mouth1_1.png",
+        "alt": "Mouth Item 1",
+        "visibility": "visible"
+    },
+    {
+        "id": "mouth1_2",
+        "src": "mouth1_2.png",
+        "alt": "Mouth Item 2",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_3",
+        "src": "mouth1_3.png",
+        "alt": "Mouth Item 3",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_4",
+        "src": "mouth1_4.png",
+        "alt": "Mouth Item 4",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_5",
+        "src": "mouth1_5.png",
+        "alt": "Mouth Item 5",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_6",
+        "src": "mouth1_6.png",
+        "alt": "Mouth Item 6",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_7",
+        "src": "mouth1_7.png",
+        "alt": "Mouth Item 7",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_8",
+        "src": "mouth1_8.png",
+        "alt": "Mouth Item 8",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_9",
+        "src": "mouth1_9.png",
+        "alt": "Mouth Item 9",
+        "visibility": "hidden"
+    },
+    {
+        "id": "mouth1_10",
+        "src": "mouth1_10.png",
+        "alt": "Mouth Item 10",
+        "visibility": "hidden"
+    }
+]
