@@ -2,29 +2,29 @@
 const jsonFiles = [
     // Bottom underwear
     'bottomunderwear1.json',
-	'eye.json',
-	'mouth.json',
+    'eye.json',
+    'mouth.json',
 
     // Top underwear
     'topunderwear1.json',
-	'onepiece1.json',
-	
-	'expression1.json',
+    'onepiece1.json',
+    
+    'expression1.json',
 
     // Boxers
     'boxers1.json',
 
     // Sweatshirts
     'sweatshirt1.json',
-	'socks1.json',
+    'socks1.json',
 
     // Shoes
     'shoes1.json',
 
     // Pants
     'pants1.json', 
-	
-	// Skirts
+    
+    // Skirts
     'skirt1.json', 
 
     // Tops
@@ -54,7 +54,7 @@ function getZIndex(categoryName) {
         onepiece: 7,
         boxer: 8,
         sweatshirt: 9,
-		socks:9,
+        socks: 9,
         shoe: 10,
         pants: 11,
         skirt: 12,
@@ -65,7 +65,6 @@ function getZIndex(categoryName) {
         hat: 17,
     };
 
-    // Return a default value if not found
     return zIndexMap[categoryName] || 0;
 }
 
@@ -81,7 +80,7 @@ async function loadItemFile(file) {
     }
 }
 
-// Load items in batches to reduce load time and improve responsiveness
+// Load items in batches
 async function loadItemsInBatches(batchSize = 5) {
     const baseContainer = document.querySelector('.base-container');
     const controlsContainer = document.querySelector('.controls');
@@ -109,8 +108,8 @@ async function loadItemsInBatches(batchSize = 5) {
                 img.classList.add(categoryName);
                 img.setAttribute('data-file', file);
                 img.style.visibility = item.visibility === "visible" ? "visible" : "hidden";
-                img.style.position = 'absolute'; // Ensure z-index applies
-                img.style.zIndex = getZIndex(categoryName); // Apply z-index dynamically
+                img.style.position = 'absolute';
+                img.style.zIndex = getZIndex(categoryName);
                 baseContainer.appendChild(img);
 
                 const button = document.createElement('img');
@@ -129,12 +128,11 @@ async function loadItemsInBatches(batchSize = 5) {
     }
 }
 
-// Toggle visibility of item images, ensuring mutual exclusivity and mandatory visibility for eyes and mouth
+// Toggle visibility
 function toggleVisibility(itemId, categoryName) {
     const categoryItems = document.querySelectorAll(`.${categoryName}`);
     let anyVisible = false;
 
-    // Ensure mutual exclusivity within the category
     categoryItems.forEach(item => {
         if (item.id !== itemId) {
             item.style.visibility = 'hidden';
@@ -146,26 +144,30 @@ function toggleVisibility(itemId, categoryName) {
     const selectedItem = document.getElementById(itemId);
     selectedItem.style.visibility = selectedItem.style.visibility === 'visible' ? 'hidden' : 'visible';
 
-    // Ensure at least one is visible for eyes and mouth
     if (categoryName === 'eye' || categoryName === 'mouth') {
         if (!anyVisible || selectedItem.style.visibility === 'hidden') {
             selectedItem.style.visibility = 'visible';
         }
     }
 
-    // Additional logic for specific categories
     if (selectedItem.style.visibility === 'visible') {
         if (categoryName === 'onepiece1') {
-            // Hide top and bottom underwear when a one-piece is selected
             hideSpecificCategories(['topunderwear', 'bottomunderwear']);
         } else if (categoryName === 'dress1') {
-            // Hide items related to number 1 when wearing dress1
             hideSpecificCategories(['top1', 'pants1', 'skirt1', 'sweatshirt1']);
+        } else if (categoryName === 'dress2') {
+            hideSpecificCategories(['top2', 'pants2', 'skirt2', 'sweatshirt2']);
+        } else if (categoryName.startsWith('top1') || categoryName.startsWith('pants1') || categoryName.startsWith('skirt1') || categoryName.startsWith('sweatshirt1')) {
+            hideSpecificCategories(['dress1']);
+        } else if (categoryName.startsWith('top2') || categoryName.startsWith('pants2') || categoryName.startsWith('skirt2') || categoryName.startsWith('sweatshirt2')) {
+            hideSpecificCategories(['dress2']);
+        } else if (categoryName === 'topunderwear1' || categoryName === 'bottomunderwear1') {
+            hideSpecificCategories(['onepiece1']);
         }
     }
 }
 
-// Helper function to hide items for specific categories
+// Hide specified categories
 function hideSpecificCategories(categories) {
     categories.forEach(category => {
         const items = document.querySelectorAll(`.${category}`);
@@ -175,36 +177,28 @@ function hideSpecificCategories(categories) {
     });
 }
 
-// Adjust canvas layout dynamically for responsive design on smaller screens
-// Adjust canvas layout dynamically for responsive design
+// Adjust layout for screen size
 function adjustCanvasLayout() {
     const baseContainer = document.querySelector('.base-container');
     const controlsContainer = document.querySelector('.controls');
-
     const screenWidth = window.innerWidth;
 
-    if (screenWidth <= 600) {
-        baseContainer.style.display = 'flex';
-        baseContainer.style.flexDirection = 'column';
-        baseContainer.style.width = '90%';
-        baseContainer.style.height = 'auto';
-        controlsContainer.style.flexWrap = 'wrap';
-    } else {
-        baseContainer.style.display = 'block';
-        baseContainer.style.width = '500px';
-        baseContainer.style.height = '400px';
-        controlsContainer.style.flexWrap = 'nowrap';
-    }
+    requestAnimationFrame(() => {
+        if (screenWidth <= 600) {
+            baseContainer.classList.add('mobile-layout');
+            baseContainer.classList.remove('desktop-layout');
+            controlsContainer.classList.add('mobile-controls');
+            controlsContainer.classList.remove('desktop-controls');
+        } else {
+            baseContainer.classList.add('desktop-layout');
+            baseContainer.classList.remove('mobile-layout');
+            controlsContainer.classList.add('desktop-controls');
+            controlsContainer.classList.remove('mobile-controls');
+        }
+    });
 }
 
-// Apply layout adjustment on load and resize
-window.onload = () => {
-    loadItemsInBatches();
-    adjustCanvasLayout();
-};
-
-window.addEventListener('resize', adjustCanvasLayout);
-// Apply layout adjustment on load and resize
+// On load
 window.onload = () => {
     loadItemsInBatches();
     adjustCanvasLayout();
@@ -212,8 +206,52 @@ window.onload = () => {
 
 window.addEventListener('resize', adjustCanvasLayout);
 
-// Function to enter game mode
+// Game start
 function enterGame() {
     document.querySelector('.main-menu').style.display = 'none';
     document.querySelector('.game-container').style.display = 'block';
 }
+
+// Blur button
+function blurButton(event) {
+    event.preventDefault();
+    event.target.blur();
+}
+
+// Button 1
+function pressButton1(event) {
+    blurButton(event);
+    document.getElementById("base2-image").style.display = "block";
+}
+
+function releaseButton1(event) {
+    blurButton(event);
+    document.getElementById("base2-image").style.display = "none";
+}
+
+// Button 2
+function pressButton2(event) {
+    blurButton(event);
+    document.getElementById("base3-image").style.display = "block";
+}
+
+function releaseButton2(event) {
+    blurButton(event);
+    document.getElementById("base3-image").style.display = "none";
+}
+
+// Button listeners
+document.addEventListener("DOMContentLoaded", () => {
+    const button1 = document.querySelector(".button-1");
+    const button2 = document.querySelector(".button-2");
+
+    button1?.addEventListener("mousedown", pressButton1);
+    button1?.addEventListener("mouseup", releaseButton1);
+    button1?.addEventListener("touchstart", pressButton1, { passive: false });
+    button1?.addEventListener("touchend", releaseButton1, { passive: false });
+
+    button2?.addEventListener("mousedown", pressButton2);
+    button2?.addEventListener("mouseup", releaseButton2);
+    button2?.addEventListener("touchstart", pressButton2, { passive: false });
+    button2?.addEventListener("touchend", releaseButton2, { passive: false });
+});
