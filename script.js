@@ -1,10 +1,9 @@
 // Array of JSON file paths
 const jsonFiles = [
     // Bottom underwear
-    'bottomunderwear1.json',
     'eye.json',
     'mouth.json',
-
+	'bottomunderwear1.json',
     // Top underwear
     'topunderwear1.json',
     'onepiece1.json',
@@ -55,7 +54,7 @@ function getZIndex(categoryName) {
         boxer: 8,
         sweatshirt: 9,
         socks: 9,
-        shoe: 10,
+        shoes: 10,
         pants: 11,
         skirt: 12,
         top: 13,
