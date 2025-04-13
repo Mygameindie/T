@@ -47,25 +47,27 @@ function getZIndex(categoryName) {
     const zIndexMap = {
         eye: 2,
         mouth: 3,
-        expression: 4,
-        bottomunderwear: 5,
-        topunderwear: 6,
-        onepiece: 7,
-        boxer: 8,
-        sweatshirt: 9,
-        socks: 9,
-        shoes: 10,
-        pants: 11,
-        skirt: 12,
-        top: 13,
-        dress: 14,
-        jacket: 15,
-        accessories: 16,
-        hat: 17,
+        expression1: 4,
+        bottomunderwear1: 5,
+        topunderwear1: 6,
+        onepiece1: 7,
+        boxers1: 8,
+        sweatshirt1: 9,
+        socks1: 9,
+        shoes1: 10,
+        pants1: 11,
+        skirt1: 12,
+        top1: 13,
+        dress1: 14,
+        jacket1: 15,
+        accessories1: 16,
+        hat1: 17
     };
 
     return zIndexMap[categoryName] || 0;
-}
+};
+
+
 
 // Load each JSON file
 async function loadItemFile(file) {

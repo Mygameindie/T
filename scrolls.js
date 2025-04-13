@@ -42,4 +42,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     generateButtons(); // Load buttons when the page loads
+  const scrollContainer = document.querySelector(".scrollable-buttons");
+
+    // Horizontal scroll using mouse wheel on PC
+    scrollContainer.addEventListener("wheel", (evt) => {
+        if (evt.deltaY !== 0) {
+            evt.preventDefault();
+            scrollContainer.scrollLeft += evt.deltaY;
+        }
+    }, { passive: false });
+
+    // Touch scroll for mobile
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollContainer.addEventListener("touchstart", (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener("touchmove", (e) => {
+        if (!isDown) return;
+        const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 1.5; // scroll speed multiplier
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    scrollContainer.addEventListener("touchend", () => {
+        isDown = false;
+    });
 });
